@@ -11,19 +11,35 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    dispatch(registerAction({ name, email, password })).then(() => {
-      setLoading(false);
-      alert('Registration Successful!');
-      navigate('/login')
-    });
-    setName('');
-    setEmail('');
-    setPassword('');
+    try {
+      if (!name || !email || !password) {
+        alert('Please fill all fields');
+        setLoading(false);
+        return;
+      }
 
+      const actionResult = await dispatch(registerAction({ name, email, password }));
+      if (registerAction.fulfilled.match(actionResult)) {
+        alert('Registration Successful');
+        setLoading(false);
+        setName('');
+        setEmail('');
+        setPassword('');
+        navigate('/login');
+      } else {
+        throw new Error(actionResult.payload);
+      }
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+      alert(error.message);
+    }
+
+  
   
   };
 

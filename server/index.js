@@ -11,7 +11,6 @@ const movieRouter = require("./routes/movie");
 
 app.use(cors());
 
-
 require("dotenv").config();
 const url = process.env.MONGO_URI;
 // console.log(url)

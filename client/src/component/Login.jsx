@@ -4,6 +4,7 @@ import { loginAction } from '../store/slice/authSlice';
 import { useNavigate, Link } from 'react-router-dom';
 
 
+
 const Login = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
@@ -15,18 +16,33 @@ const Login = () => {
 
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    dispatch(loginAction({ email, password })).then(() => {
+  
+    try {
+      if (!email || !password) {
+        alert('Please fill all fields');
+        setLoading(false);
+        return;
+      }
+  
+      const actionResult = await dispatch(loginAction({ email, password }));
+      // console.log(actionResult.payload);
+      if (loginAction.fulfilled.match(actionResult)) {
+        alert('Login Successful');
+        setLoading(false);
+        setEmail('');
+        setPassword('');
+        navigate('/watchlist');
+      } else {
+        throw new Error(actionResult.payload);
+      }
+    } catch (error) {
       setLoading(false);
-      alert("Login Successful!");
-
-      navigate('/watchlist');
-    });
-    
-    setEmail('');
-    setPassword('');
+      console.log(error);
+      alert(error.message);
+    }
   };
 
   useEffect(() => {

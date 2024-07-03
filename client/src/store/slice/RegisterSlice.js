@@ -2,11 +2,18 @@ import { createSlice , createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { registerUser } from '../../api';
 
-export const registerAction = createAsyncThunk('/Register', async (userData) => {
-    const response = await registerUser(userData);
-    // localStorage.setItem('CineTracker', JSON.stringify(response));
-    console.log(response);
-    return response;
+export const registerAction = createAsyncThunk('/Register', async (userData, {rejectWithValue}) => {
+    try {
+        const response = await registerUser(userData);
+   
+        
+        return response;
+        
+    } catch (error) {
+
+        return rejectWithValue(error);
+        
+    }
     });
 
 const RegisterSlice = createSlice({

@@ -4,11 +4,18 @@ import axios from 'axios';
 import { loginUser } from '../../api';
 
 
-export const loginAction = createAsyncThunk('/Login', async (userData) => {
-  const response = await loginUser(userData);
-  localStorage.setItem('CineTracker', JSON.stringify(response));
-  return response;
-});
+export const loginAction = createAsyncThunk(
+  'auth/login',
+  async (userData, { rejectWithValue }) => {
+    try {
+      const response = await loginUser(userData);
+      localStorage.setItem('CineTracker', JSON.stringify(response));
+      return response;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
 
 const authSlice = createSlice({
   name: 'auth',
