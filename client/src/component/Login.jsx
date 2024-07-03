@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch , useSelector} from 'react-redux';
 import { loginAction } from '../store/slice/authSlice';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 const Login = () => {
@@ -75,6 +75,7 @@ const Login = () => {
             Sign In
           </button>
         </div>
+      <p className='text-white mt-5'>Not Registerd yet ? <Link className='text-blue-500 ' to='/register'>Register</Link></p>
       </form>
     </div>
   );

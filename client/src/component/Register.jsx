@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { registerAction } from '../store/slice/RegisterSlice';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -78,6 +78,8 @@ const Register = () => {
             Register
           </button>
         </div>
+      <p className='text-white mt-5'>Already Registerd ? <Link className='text-blue-500 ' to='/login'>Login</Link></p>
+
       </form>
     </div>
   );
