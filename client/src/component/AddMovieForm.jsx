@@ -6,6 +6,7 @@ import { createMovieAction } from '../store/slice/moviesSlice';
 const AddMovieForm = ({ onClose }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [releaseYear, setReleaseYear] = useState('');
@@ -40,12 +41,16 @@ const AddMovieForm = ({ onClose }) => {
       return;
     }
 
+    setLoading(true);
+
    
 
     dispatch(createMovieAction(newMovie)).then(() => {
+      setLoading(false);
       alert("Movie added successfully!");
       navigate('/watchlist');
      
+
     });
   };
 
@@ -164,6 +169,7 @@ const AddMovieForm = ({ onClose }) => {
             </Link>
             <button
               type="submit"
+              disabled={loading}
               className="px-4 py-2 text-sm font-medium text-white bg-[#DDA6FF] border border-transparent rounded-md hover:bg-[#B153E0] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
             >
               Add Movie

@@ -195,6 +195,7 @@ const UpdateMovie = () => {
             </Link>
             <button
               type="submit"
+              disabled={loading}
               className="px-4 py-2 text-sm font-medium text-white bg-[#DDA6FF] border border-transparent rounded-md hover:bg-[#B153E0] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
             >
               Save

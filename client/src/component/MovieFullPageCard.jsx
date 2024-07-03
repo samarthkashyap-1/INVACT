@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{useEffect, useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteMovieAction } from '../store/slice/moviesSlice';
@@ -7,6 +7,7 @@ import { deleteMovieAction } from '../store/slice/moviesSlice';
 const MovieFullPageCard = ({ movie, onClick }) => {
 
     const dispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     
     const handleDelete = () => {
@@ -15,9 +16,11 @@ const MovieFullPageCard = ({ movie, onClick }) => {
         if (!check) {
             return;
         }
+        setLoading(true);
 
 
         dispatch(deleteMovieAction(movie.id)).then(() => {
+            setLoading(false);
             alert("Movie Deleted Successfully");
             onClick();
          
@@ -56,10 +59,14 @@ const MovieFullPageCard = ({ movie, onClick }) => {
       </div>
       <div className='flex gap-5 justify-center mt-5'>
 <Link to=
-{`/updatemovie/${movie.id}`} className='text-white bg-[#DDA6FF] px-3 py-1 rounded-md hover:bg-[#B153E0]'>Edit</Link>
+{`/updatemovie/${movie.id}`}
+
+className='text-white bg-[#DDA6FF] px-3 py-1 rounded-md hover:bg-[#B153E0]'>Edit</Link>
 <Link to='/watchlist' onClick={()=>{
     handleDelete()
-}} className='text-white bg-[#DDA6FF] px-3 py-1 rounded-md hover:bg-[#B153E0]'>Delete</Link>
+}} className='text-white bg-[#DDA6FF] px-3 py-1 rounded-md hover:bg-[#B153E0]'
+
+><button disabled={loading}>Delete</button></Link>
 </div>
 
     </div>
