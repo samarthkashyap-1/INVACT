@@ -9,11 +9,14 @@ const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
 
     dispatch(registerAction({ name, email, password })).then(() => {
+      setLoading(false);
       alert('Registration Successful!');
       navigate('/login')
     });
@@ -74,6 +77,7 @@ const Register = () => {
           <button
             className="bg-[#DDA6FF] hover:bg-[#B153E0] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
+            disabled={loading}
           >
             Register
           </button>

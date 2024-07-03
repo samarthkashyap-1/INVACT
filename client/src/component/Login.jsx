@@ -9,6 +9,7 @@ const Login = () => {
   const user = useSelector((state) => state.auth.user);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -16,7 +17,9 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     dispatch(loginAction({ email, password })).then(() => {
+      setLoading(false);
       alert("Login Successful!");
 
       navigate('/watchlist');
@@ -71,6 +74,7 @@ const Login = () => {
           <button
             className="bg-[#DDA6FF] hover:bg-[#B153E0] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
+            disabled={loading}
           >
             Sign In
           </button>
