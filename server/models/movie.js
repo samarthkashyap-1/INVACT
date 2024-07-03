@@ -45,6 +45,6 @@ movieSchema.set("toJSON", {
   },
 });
 
-const Task = mongoose.model("Task", movieSchema);
+const Movies = mongoose.model("Movie", movieSchema);
 
-module.exports = Task;
+module.exports = Movies;
